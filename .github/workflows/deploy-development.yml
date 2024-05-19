@@ -2,20 +2,22 @@ name: Build & Publish Development
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
+    branches:
+    - develop
 
 jobs:
   deploy:
     name: Build & Deploy
     runs-on: ubuntu-latest
-    if: github.repository_owner == 'wg-easy'
+    if: github.repository_owner == 'Teqsoft'
     permissions:
       packages: write
       contents: read
     steps:
     - uses: actions/checkout@v4
       with:
-        ref: production
+        ref: develop
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
@@ -34,5 +36,5 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        platforms: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8
-        tags: ghcr.io/wg-easy/wg-easy:development
+        platforms: linux/arm64/v8
+        tags: ghcr.io/Teqsoft/wg-easy:development
