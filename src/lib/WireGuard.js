@@ -23,6 +23,7 @@ const {
   WG_POST_UP,
   WG_PRE_DOWN,
   WG_POST_DOWN,
+  WG_S3_CONFIG
 } = require('../config');
 
 module.exports = class WireGuard {
@@ -33,6 +34,16 @@ module.exports = class WireGuard {
         if (!WG_HOST) {
           throw new Error('WG_HOST Environment Variable Not Set!');
         }
+
+        var command = 'aws s3 cp ' + WG_S3_CONFIG + ' ' + WG_PATH
+        console.log("Executing " + command + " ...")
+        await Util.exec(command).catch((err) => {
+          if (err && err.message) {
+            throw new Error('Error executing command ' + command + ': ' + err.message )
+          }
+          
+          throw err;
+        })
 
         debug('Loading configuration...');
         let config;
