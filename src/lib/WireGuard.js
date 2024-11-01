@@ -134,6 +134,17 @@ ${client.allowedIPs ? `AllowedIPs = ${client.address}/32, ${client.allowedIPs}` 
     await fs.writeFile(path.join(WG_PATH, 'wg0.conf'), result, {
       mode: 0o600,
     });
+
+    var command = 'aws s3 cp ' + WG_PATH + ' ' + WG_S3_CONFIG
+    console.log("Executing " + command + " ...")
+    await Util.exec(command).catch((err) => {
+      if (err && err.message) {
+        throw new Error('Error executing command ' + command + ': ' + err.message )
+      }
+      
+      throw err;
+    })
+
     debug('Config saved.');
   }
 
