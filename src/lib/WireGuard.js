@@ -122,8 +122,7 @@ PostDown = ${WG_POST_DOWN}
 [Peer]
 PublicKey = ${client.publicKey}
 ${client.preSharedKey ? `PresharedKey = ${client.preSharedKey}\n` : ''
-}
-${client.allowedIPs ? `AllowedIPs = ${client.address}/32, ${client.allowedIPs}` : `AllowedIPs = ${client.address}/32`
+}${client.allowedIPs ? `AllowedIPs = ${client.address}/32, ${client.allowedIPs}` : `AllowedIPs = ${client.address}/32`
 }`;
     }
 
@@ -137,13 +136,13 @@ ${client.allowedIPs ? `AllowedIPs = ${client.address}/32, ${client.allowedIPs}` 
 
     var command = 'aws s3 cp ' + WG_PATH + ' ' + WG_S3_CONFIG
     console.log("Executing " + command + " ...")
-    await Util.exec(command).catch((err) => {
-      if (err && err.message) {
-        throw new Error('Error executing command ' + command + ': ' + err.message )
-      }
+    // await Util.exec(command).catch((err) => {
+    //   if (err && err.message) {
+    //     throw new Error('Error executing command ' + command + ': ' + err.message )
+    //   }
       
-      throw err;
-    })
+    //   throw err;
+    // })
 
     debug('Config saved.');
   }

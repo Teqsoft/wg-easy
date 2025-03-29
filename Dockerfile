@@ -24,7 +24,7 @@ COPY --from=build_node_modules /app /app
 # Also, some node_modules might be native, and
 # the architecture & OS of your development machine might differ
 # than what runs inside of docker.
-COPY --from=build_node_modules /node_modules /node_modules
+COPY --from=build_node_modules /node_modules /app/node_modules
 
 # Install Linux packages
 RUN apk add --no-cache \
